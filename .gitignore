@@ -1,0 +1,15 @@
+# IDE files
+.vscode/
+.idea/
+
+# Database / Export files that might be large or sensitive
+*.sql
+!database/erationportal.sql
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Any temporary files
+temp/
+logs/
