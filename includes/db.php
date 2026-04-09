@@ -1,10 +1,12 @@
 <?php
 // includes/db.php
 
-$host = 'localhost';
-$dbname = 'erationportal';
-$username = 'root';
-$password = '';
+// Use environment variables for production (Railway) or fall back to localhost for development
+$host = getenv('MYSQLHOST') ?: 'localhost';
+$dbname = getenv('MYSQLDATABASE') ?: 'erationportal';
+$username = getenv('MYSQLUSER') ?: 'root';
+$password = getenv('MYSQLPASSWORD') ?: '';
+$port = getenv('MYSQLPORT') ?: '3306';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
