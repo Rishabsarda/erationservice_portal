@@ -12,10 +12,20 @@ $stmt = $pdo->prepare("SELECT * FROM ration_shop WHERE shop_id = ?");
 $stmt->execute([$shop_id]);
 $shop = $stmt->fetch();
 
+// Fallback defaults if shop not yet created
+if (!$shop) {
+    $shop = ['shop_id' => 1, 'shop_name' => 'Not configured', 'is_open' => 0, 'shop_timings' => 'N/A', 'mobile_no' => 'N/A'];
+}
+
 // Fetch stock info
 $stmt2 = $pdo->prepare("SELECT * FROM ration_stock WHERE shop_id = ?");
 $stmt2->execute([$shop_id]);
 $stock = $stmt2->fetch();
+
+// Fallback defaults if stock not yet created
+if (!$stock) {
+    $stock = ['rice_qty' => 0, 'wheat_qty' => 0, 'sugar_qty' => 0, 'kerosene_qty' => 0];
+}
 
 // Fetch today's distributions
 $stmt3 = $pdo->prepare("SELECT d.*, u.name, u.ration_card_no FROM ration_distribution d JOIN users u ON d.user_id = u.user_id WHERE d.shop_id = ? AND d.distribution_date = CURDATE() ORDER BY d.distribution_id DESC");
