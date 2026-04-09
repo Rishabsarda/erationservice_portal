@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS slot_bookings (
 
 -- Insert Shopkeeper Admin (password is 'admin123' hashed)
 INSERT INTO admin (admin_name, username, password) VALUES 
-('Ramesh Kumar', 'admin', '$2y$10$247Em8Xq.TRgiEQYBwte2OW5Ih3e50h5NfFfLuWAvB1jzVVU16oLa');
+('Ramesh Kumar', 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
 
 -- Insert Ration Shop
 INSERT INTO ration_shop (shop_name, shop_address, village, shop_timings, shopkeeper_name, mobile_no, is_open) VALUES 
@@ -108,7 +108,3 @@ INSERT INTO users (name, ration_card_no, mobile_no, address, village, family_mem
 -- Insert Sample Complaint
 INSERT INTO complaints (user_id, complaint_text, complaint_date, status) VALUES 
 (1, 'Rice quality is not good this month.', CURDATE() - INTERVAL 2 DAY, 'Pending');
-
--- Insert Sample Slot Booking for Today (to test the new dashboard feature)
-INSERT INTO slot_bookings (user_id, shop_id, slot_date, time_slot) VALUES 
-(1, 1, CURDATE(), '09:00 AM - 11:00 AM');

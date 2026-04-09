@@ -1,0 +1,7 @@
+{
+    "name": "rishab/erationservice-portal",
+    "description": "E-Ration Service Portal",
+    "require": {
+        "php": "^8.1"
+    }
+}
