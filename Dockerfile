@@ -1,21 +1,17 @@
-FROM php:8.1-apache
+FROM php:8.1-cli
 
-# Install PDO MySQL extension
+# Install PDO MySQL extension for database connectivity
 RUN docker-php-ext-install pdo pdo_mysql
 
-# 1. Fix Apache MPM Conflict: Disable event/worker and enable prefork
-# This prevents the 'More than one MPM loaded' crash
-RUN a2dismod mpm_event mpm_worker || true
-RUN a2enmod mpm_prefork
+# Set working directory to the web root
+WORKDIR /app
 
-# 2. Copy application files
-COPY . /var/www/html/
+# Copy all application files to the container
+COPY . .
 
-# 3. Configure Apache to listen on $PORT instead of 80 (required by Railway)
-RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
+# Expose the port (informative only for Docker, Railway uses the $PORT env var)
+EXPOSE 8080
 
-# 4. Enable rewrite module for modern URL structures
-RUN a2enmod rewrite
-
-# 5. Ensure Apache stays in foreground
-CMD ["apache2-foreground"]
+# Start the PHP built-in web server binding to 0.0.0.0 and the Railway-provided $PORT
+# We use the shell form of CMD to ensure $PORT expansion works correctly
+CMD php -S 0.0.0.0:$PORT
